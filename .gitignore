@@ -1,0 +1,43 @@
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+error-log-monitor
+
+# Ignore Editor files
+*.sublime*
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*~.nib
+*~
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore all uploads
+wp-content/uploads/
+
+# Ignore Composer files
+/vendor/
+/composer.lock
+/composer.phar
+/composer.json
+
+# Ignore npm files
+/package-lock.json
+/package.json
+/node_modules/
+
+# Ignore cache and backup files.
+*.bak
+*.swp
+*~
+.cache
+.backup
+.temp
+.tmp

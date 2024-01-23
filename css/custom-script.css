@@ -1,0 +1,21 @@
+jQuery(document).ready(function($) {
+  $('#rover-form').submit(function(event) {
+      event.preventDefault();
+      var rover = $('#rover-select').val();
+      var date = $('#date-picker').val();
+
+      $.ajax({
+          url: marsRoverPhotos.ajax_url,
+          type: 'POST',
+          data: {
+              action: 'fetch_rover_photos',
+              rover: rover,
+              date: date,
+              api_key: marsRoverPhotos.api_key
+          },
+          success: function(response) {
+              $('#photo-container').html(response);
+          }
+      });
+  });
+});
