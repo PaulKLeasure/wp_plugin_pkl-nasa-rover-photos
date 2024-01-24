@@ -1,18 +1,22 @@
 jQuery(document).ready(function($) {
-
   let allPhotos = [];
   let currentPage = 1;
-  const photosPerPage = 3; 
-  
+  const photosPerPage = 10; 
+  const roverCameras = {
+    curiosity: ["FHAZ", "RHAZ", "MAST", "CHEMCAM", "MAHLI", "MARDI", "NAVCAM"],
+    opportunity: ["FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"],
+    spirit: ["FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"]
+  };
+  // Feth Mars Rover Photos from NASA's API
   $('#rover-form').submit(function (event) {
       event.preventDefault();
       const apiKey = pklMarsRoverPhotos.api_key;
       const rover = $('select#rover-select').val();
+      const camera = $('#camera-select').val();
       const earthDate = $('#date-picker').val();
       //const apiKey = 'ZfmINDjBqhdH2tNMgqPbYzjE8YIAZf0btHobVTCR';
       console.log("ROVER::", rover);
       const marsRoverPhotosUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos`;
-
       // Fetch data from NASA API 
       $.ajax({
           url: marsRoverPhotosUrl,
@@ -20,7 +24,8 @@ jQuery(document).ready(function($) {
           data: {
               action: 'fetch_rover_photos',
               api_key: apiKey,
-              earth_date: earthDate
+              earth_date: earthDate,
+              camera: camera
           },
           success: function(response) {
               console.log("RESPONSE: ", response);
@@ -55,22 +60,41 @@ jQuery(document).ready(function($) {
       $('#next-button').prop('disabled', currentPage === totalPages);
   }
   
-  // Event listeners for pagination controls
-  $('#next-button').on('click', function() {
-      if (currentPage * photosPerPage < allPhotos.length) {
-          currentPage++;
-          displayPhotos();
-      }
-  });
+    // Event listeners for pagination controls
+    $('#next-button').on('click', function() {
+        if (currentPage * photosPerPage < allPhotos.length) {
+            currentPage++;
+            displayPhotos();
+        }
+    });
+    
+    $('#prev-button').on('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayPhotos();
+        }
+    });
   
-  $('#prev-button').on('click', function() {
-      if (currentPage > 1) {
-          currentPage--;
-          displayPhotos();
-      }
-  });
-  
-    // Initial call
-    //fetchRoverPhotos();
+    // Rover camera selection logic
+    function updateCameraSelection(rover) {
+        const cameras = roverCameras[rover];
+        const cameraSelect = $('#camera-select');
+        cameraSelect.empty().append('<option value="">Select a Camera</option>');
+    
+        if (cameras) {
+            cameras.forEach(camera => {
+                cameraSelect.append($('<option></option>').val(camera).text(camera));
+            });
+            cameraSelect.prop('disabled', false);
+        } else {
+            cameraSelect.prop('disabled', true);
+        }
+    }
+    
+    $('#rover-select').on('change', function() {
+        const selectedRover = $(this).val();
+        updateCameraSelection(selectedRover);
+    });
 
-});
+  
+});// ------------_END_------------------

@@ -1,9 +1,13 @@
 <div class="container">
     <form id="rover-form">
         <select id="rover-select" class="form-select">
-            <option value="curiosity">Curiosity</option>
-            <option value="opportunity">Opportunity</option>
-            <option value="spirit">Spirit</option>
+          <option value="curiosity">Curiosity</option>
+          <option value="opportunity">Opportunity</option>
+          <option value="spirit">Spirit</option>
+        </select>
+        <select id="camera-select" class="form-select" disabled>
+          <option value="">Select a Camera</option>
+          <!-- Camera options will be added dynamically -->
         </select>
         <input type="date" id="date-picker" class="form-control">
         <button type="submit" class="btn btn-primary">Search</button>
