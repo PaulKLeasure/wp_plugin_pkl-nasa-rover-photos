@@ -1,6 +1,6 @@
 # PKL Mars Rover Photos
 
-This is a small project plugin making use of the NASA Mars Rovers API.
+This is a small WordPress project plugin making use of the NASA Mars Rovers API.
 For security reasons the nesseasry API cannot be included with this code.
 Obtain an API Key from NASA; Very simple instructions found at link below
 
